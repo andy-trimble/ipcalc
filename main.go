@@ -8,8 +8,6 @@ import (
 	"os"
 	"strings"
 	"text/tabwriter"
-
-	"github.com/alecthomas/kingpin"
 )
 
 func inc(ip net.IP) {
@@ -26,20 +24,21 @@ func main() {
 	log.SetPrefix("")
 	log.SetFlags(0)
 
-	ipRange := kingpin.Arg("range", "A CIDR range.").String()
-	kingpin.Parse()
+	var ipRange string
+	var err error
 
-	if *ipRange == "" {
+	if len(os.Args) > 1 {
+		ipRange = os.Args[1]
+	} else {
 		reader := bufio.NewReader(os.Stdin)
-		r, err := reader.ReadString('\n')
+		ipRange, err = reader.ReadString('\n')
 		if err != nil {
 			log.Fatal(err)
 		}
-		r = strings.TrimSpace(r)
-		ipRange = &r
+		ipRange = strings.TrimSpace(ipRange)
 	}
 
-	addr, network, err := net.ParseCIDR(*ipRange)
+	addr, network, err := net.ParseCIDR(ipRange)
 	if err != nil {
 		log.Fatal(err)
 	}
