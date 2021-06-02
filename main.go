@@ -20,7 +20,6 @@ func inc(ip net.IP) {
 }
 
 func main() {
-
 	log.SetPrefix("")
 	log.SetFlags(0)
 
@@ -28,8 +27,10 @@ func main() {
 	var err error
 
 	if len(os.Args) > 1 {
+		// The range was passed in as an argument
 		ipRange = os.Args[1]
 	} else {
+		// Read from standard input
 		reader := bufio.NewReader(os.Stdin)
 		ipRange, err = reader.ReadString('\n')
 		if err != nil {

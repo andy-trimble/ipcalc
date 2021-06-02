@@ -7,11 +7,7 @@ You must have Go installed and $GOPATH/bin must be in your path. For example:
 
 Download and install the `ipcalc` binary
 
-`git clone git@github.com:andy-trimble/ipcalc.git`
-
-`cd ipcalc`
-
-`go install`
+`go install github.com/andy-trimble/ipcalc@latest`
 
 ## Usage
 ```
