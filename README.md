@@ -14,4 +14,20 @@ Download and install the `ipcalc` binary
 `go install`
 
 ## Usage
-`ipcalc 10.1.0.0/24`
+```
+> ipcalc 10.1.0.0/24
+CIDR Range: 10.1.0.0/24
+Netmask: ffffff00
+First IP: 10.1.0.0
+Last IP: 10.1.0.255
+Addresses: 256
+```
+
+```
+> echo "10.1.0.0/24" | ipcalc
+CIDR Range: 10.1.0.0/24
+Netmask: ffffff00
+First IP: 10.1.0.0
+Last IP: 10.1.0.255
+Addresses: 256
+```
