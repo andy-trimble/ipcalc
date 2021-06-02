@@ -48,7 +48,7 @@ func main() {
 	}
 
 	log.Printf("CIDR Range: %s", network)
-	log.Printf("Netmask: %s", network.Mask.String())
+	log.Printf("Netmask: %d.%d.%d.%d", network.Mask[0], network.Mask[1], network.Mask[2], network.Mask[3])
 	log.Printf("First IP: %s", ips[0])
 	log.Printf("Last IP: %s", ips[len(ips)-1])
 	log.Printf("Addresses: %d", len(ips))
