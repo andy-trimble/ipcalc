@@ -2,10 +2,12 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"net"
 	"os"
 	"strings"
+	"text/tabwriter"
 
 	"github.com/alecthomas/kingpin"
 )
@@ -47,9 +49,11 @@ func main() {
 		ips = append(ips, ip.String())
 	}
 
-	log.Printf("CIDR Range: %s", network)
-	log.Printf("Netmask: %d.%d.%d.%d", network.Mask[0], network.Mask[1], network.Mask[2], network.Mask[3])
-	log.Printf("First IP: %s", ips[0])
-	log.Printf("Last IP: %s", ips[len(ips)-1])
-	log.Printf("Addresses: %d", len(ips))
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
+	fmt.Fprintf(w, "CIDR Range:\t%s\n", network)
+	fmt.Fprintf(w, "Netmask:\t%d.%d.%d.%d\n", network.Mask[0], network.Mask[1], network.Mask[2], network.Mask[3])
+	fmt.Fprintf(w, "First IP:\t%s\n", ips[0])
+	fmt.Fprintf(w, "Last IP:\t%s\n", ips[len(ips)-1])
+	fmt.Fprintf(w, "Addresses:\t%d\n", len(ips))
+	w.Flush()
 }
