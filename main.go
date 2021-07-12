@@ -45,16 +45,23 @@ func main() {
 		log.Fatal("built for IPv4 only")
 	}
 
-	var ips []string
-	for ip := addr.Mask(network.Mask); network.Contains(ip); inc(ip) {
-		ips = append(ips, ip.String())
+	subnetMask := network.Mask
+	firstIp := make([]byte, len(ipv4))
+	lastIp := make([]byte, len(ipv4))
+	numIPs := 0
+
+	for i := range ipv4 {
+		firstIp[i] = ipv4[i] & subnetMask[i]
+		lastIp[i] = ipv4[i] | (subnetMask[i] ^ 0xff)
+		numIPs <<= 8
+		numIPs += int(subnetMask[i] ^ 0xff)
 	}
 
 	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
 	fmt.Fprintf(w, "CIDR Range:\t%s\n", network)
 	fmt.Fprintf(w, "Netmask:\t%d.%d.%d.%d\n", network.Mask[0], network.Mask[1], network.Mask[2], network.Mask[3])
-	fmt.Fprintf(w, "First IP:\t%s\n", ips[0])
-	fmt.Fprintf(w, "Last IP:\t%s\n", ips[len(ips)-1])
-	fmt.Fprintf(w, "Addresses:\t%d\n", len(ips))
+	fmt.Fprintf(w, "First IP:\t%s\n", net.IP(firstIp))
+	fmt.Fprintf(w, "Last IP:\t%s\n", net.IP(lastIp))
+	fmt.Fprintf(w, "Addresses:\t%d\n", numIPs+1)
 	w.Flush()
 }
