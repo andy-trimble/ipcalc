@@ -40,6 +40,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	ipv4 := addr.To4()
+	if ipv4 == nil {
+		log.Fatal("built for IPv4 only")
+	}
+
 	var ips []string
 	for ip := addr.Mask(network.Mask); network.Contains(ip); inc(ip) {
 		ips = append(ips, ip.String())
