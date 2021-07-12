@@ -6,7 +6,6 @@ import (
 	"log"
 	"net"
 	"os"
-	"strconv"
 	"strings"
 	"text/tabwriter"
 )
@@ -36,19 +35,6 @@ func main() {
 	}
 
 	ipRange = strings.TrimSpace(ipRange)
-
-	spl := strings.Split(ipRange, "/")
-	if len(spl) < 2 {
-		log.Fatal("bad cidr")
-	}
-	r, err := strconv.Atoi(spl[1])
-	if err != nil {
-		log.Fatal(err)
-	}
-	if r < 8 {
-		log.Fatal("range cannot be smaller than 8")
-	}
-
 	addr, network, err := net.ParseCIDR(ipRange)
 	if err != nil {
 		log.Fatal(err)
