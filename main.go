@@ -25,7 +25,6 @@ func main() {
 	log.SetFlags(0)
 
 	var ipRange string
-	var err error
 
 	if len(os.Args) > 1 {
 		// The range was passed in as an argument
@@ -33,12 +32,10 @@ func main() {
 	} else {
 		// Read from standard input
 		reader := bufio.NewReader(os.Stdin)
-		ipRange, err = reader.ReadString('\n')
-		if err != nil {
-			log.Fatal(err)
-		}
-		ipRange = strings.TrimSpace(ipRange)
+		ipRange, _ = reader.ReadString('\n')
 	}
+
+	ipRange = strings.TrimSpace(ipRange)
 
 	spl := strings.Split(ipRange, "/")
 	if len(spl) < 2 {
